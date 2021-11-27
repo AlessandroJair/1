@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TEST</title>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+  </head>
+
+  <body>
+    <div>
+      <form>
+        <input type="range" name="Servo1" id="Servo1" min="0" max="180" />
+        <label for="Servo1">Servo1</label>
+        <input type="range" name="Servo2" id="Servo2" min="0" max="180" />
+        <label for="Servo2">Servo2</label>
+        <input type="range" name="Grip" id="Grip" min="0" max="180" />
+        <label for="Grip">Grip</label>
+        <input type="range" name="Base" id="Base" min="0" max="180" />
+        <label for="Base">Base</label>
+      </form>
+    </div>
+  </body>
+  <script>
+    var s1_m = 90;
+    var s2_m = 90;
+    var g_m = 90;
+    var b_m = 90;
+    function actualizar() {
+      var servo1 = $("#Servo1").val();
+      var servo2 = $("#Servo2").val();
+      var grip = $("#Grip").val();
+      var base = $("#Base").val();
+      var dict = {};
+      if (servo1 != s1_m) {
+        dict.S1 = servo1;
+        s1_m = servo1;
+      }
+      if (servo2 != s2_m) {
+        dict.S2 = servo2;
+        s2_m = servo2;
+      }
+      if (grip != g_m) {
+        dict.G = grip;
+        g_m = grip;
+      }
+      if (base != b_m) {
+        dict.B = base;
+        b_m = base;
+      }
+      $.ajax({
+        data: dict,
+        type: "POST",
+        url: "/set",
+      });
+    }
+  </script>
+
+  <script>
+    setInterval("actualizar()", 1000);
+  </script>
+</html>
